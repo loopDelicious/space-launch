@@ -7,7 +7,7 @@ class App extends Component {
         <div className="App">
           <div id="intro">
             <div className="width">
-              <h2>Evolution of Web Server Operating Systems</h2>
+              <h2>Launch calendar</h2>
               <h3>
                 by <a href="https://meowsergirl.com/">Joyce Lin</a>
                 <span className="spacer"> | </span>
