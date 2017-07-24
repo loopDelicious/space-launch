@@ -1,0 +1,55 @@
+.App {
+  text-align: center;
+}
+
+.width {
+  width: 970px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+#intro {
+  background-color: var(--main-color);
+  height: 300px;
+  width: 100%;
+  color: var(--light-text);
+  display: flex;
+  justify-content: center;
+  text-align: left;
+  flex-direction: column;
+}
+
+#intro h2 {
+  color: var(--light-text);
+  font-size: 48px;
+  text-align: left;
+  max-width: 700px;
+  margin-bottom: 30px;
+}
+
+#intro h3 {
+  font-size: 16px;
+  color: white;
+  text-align: left;
+  font-weight: normal;
+}
+
+#intro a {
+  color: var(--light-text);
+}
+
+#intro a:hover {
+  color: var(--text);
+}
+
+.section {
+  margin: 40px 0;
+}
+
+.spacer {
+  margin: 0 10px;
+}
+
+.intro-p {
+  margin: 40px 0;
+}
