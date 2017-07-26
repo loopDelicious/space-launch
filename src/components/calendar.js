@@ -4,13 +4,13 @@ import * as d3 from 'd3';
 
 class Calendar extends Component {
 
-    componentDidMount = () => {
+    makeCalendar = (jsonData) => {
 
         // https://bl.ocks.org/mbostock/4063318
 
         let width = 960,
-            height = 136,
-            cellSize = 17;
+        height = 136,
+        cellSize = 17;
 
         let formatPercent = d3.format(".1%");
 
@@ -20,7 +20,7 @@ class Calendar extends Component {
 
         let svg = d3.select("body")
             .selectAll("svg")
-            .data(d3.range(1990, 2011))
+            .data(d3.range(2006, 2017))
             .enter().append("svg")
             .attr("width", width)
             .attr("height", height)
@@ -54,19 +54,16 @@ class Calendar extends Component {
             .enter().append("path")
             .attr("d", pathMonth);
 
-        d3.csv("dji.csv", function(error, csv) {
-            if (error) throw error;
 
-            let data = d3.nest()
-                .key(function(d) { return d.Date; })
-                .rollup(function(d) { return (d[0].Close - d[0].Open) / d[0].Open; })
-                .object(csv);
+        let data = d3.nest()
+            .key(function(d) { return d.Date; })
+            .rollup(function(d) { return (d[0].Close - d[0].Open) / d[0].Open; })
+            .object(jsonData);
 
-            rect.filter(function(d) { return d in data; })
-                .attr("fill", function(d) { return color(data[d]); })
-                .append("title")
-                .text(function(d) { return d + ": " + formatPercent(data[d]); });
-        });
+        rect.filter(function(d) { return d in data; })
+            .attr("fill", function(d) { return color(data[d]); })
+            .append("title")
+            .text(function(d) { return d + ": " + formatPercent(data[d]); });
 
         function pathMonth(t0) {
             let t1 = new Date(t0.getFullYear(), t0.getMonth() + 1, 0),
@@ -80,6 +77,32 @@ class Calendar extends Component {
         }
     };
 
+    componentDidMount = () => {
+
+        // https://github.com/r-spacex/SpaceX-API
+
+        const myHeaders = new Headers();
+
+        const myInit = { method: 'GET',
+            headers: myHeaders,
+            mode: 'cors',
+            cache: 'default' };
+
+        window.fetch('https://api.spacexdata.com/v1/launches', myInit)
+            .then(response => response.json())
+            .then(resJson => {
+                if(resJson) {
+                    console.log('spacex ', resJson);
+                    this.makeCalendar(resJson);
+                }
+            })
+            .catch(() => {
+                throw new Error('Network response was not ok.');
+            });
+
+
+
+    };
 
     render() {
         return (
